@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>SSH keys management</title>
+        <link rel="stylesheet" type="text/css" href='{{MEDIA_URL}}css/main.css' />
+        <script language="JavaScript" type="text/javascript" src='{{MEDIA_URL}}js/jquery-1.9.1.min.js'></script>
+        <script language="JavaScript" type="text/javascript" src='{{MEDIA_URL}}js/main.js'></script>
+    </head>
+
+    <body>
+        <script type='text/javascript' language='JavaScript'>
+        </script>
+        <div class="container">
+            <div class="edit-area">
+                <form name='frmKey' action='' method='POST'>
+                    <input type='hidden' name='actionType' />
+                    <table class="form-table">
+                        <caption></caption>
+                        <tbody>
+                            <tr>
+                                <td width="15%">type:</td>
+                                <td width="85%"><input type='text' name='txtType' style="width:100px;" /></td>
+                            </tr>
+                            <tr>
+                                <td>id:</td>
+                                <td><input type='text' name='txtId' style="width: 100px" /></td>
+                            </tr>
+                            <tr>
+                                <td width="15%">key:</td>
+                                <td width="85%"><textarea name='txtKey' style="width: 600px; height:100px;"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="submit-row">
+                                    <button type="reset" name="btnReset">Reset</button>
+                                    <button type="button" name="btnSubmit" onClick='save_key()'>Save</button>
+                                    <button type="button" name="btnCancel" onclick="cancel_key()">Cancel</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class='error-msg'>
+            </div>
+            <div class="list-area">
+                <table class='table-list'>
+                    <caption>SSH Keys</caption>
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>type</th>
+                            <th>key</th>
+                            <th class='last-column'><a href='javascript:update_keys()'><img src='{{MEDIA_URL}}img/refresh.png' /></a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        {% for key in ssh_keys %}
+                        <tr>
+                            <td>{{key.getId}}</td>
+                            <td>{{key.getType}}</td>
+                            <td>{{key.getShortKey}}</td>
+                            <td class='last-column'>
+                                <a href='javascript:edit_key({{key.idx}})'><img src='{{MEDIA_URL}}img/edit.png' /></a>
+                                <a href='javascript:delete_key({{key.idx}})'><img src='{{MEDIA_URL}}img/delete.png' /></a>
+                            </td>
+                        </tr>
+        {% endfor %}
+                        <tr>
+                            <td colspan="4" class="lastrow">
+                                <a href='javascript:add_key()'><img src='{{MEDIA_URL}}img/add.png' /></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
